@@ -11,7 +11,7 @@ new Vue({
     data: {
         users: [],
         errors: [],
-        searchResult: [],
+        searchResult: [],        
         searchId: '',
         lname: '',
         fname: '',
@@ -20,23 +20,58 @@ new Vue({
         d_lname: '',
         d_fname: '',
         d_email: '',
-        d_phone: ''
-
-    },
-    methods: {
-        getList() {
+        d_phone: '',
+        pagination: { currentPage: 1 },        
+        setPage: function(pageNo) {
+            this.pagination.currentPage = pageNo
+        },
+        pageChanged: function() {
+            console.log('Page changed to: ' + this.pagination.currentPage)
+               
             axios.get(`http://localhost:8080/data`)
                 .then(response => {
-
-                    console.log(response.data)                
+                    //console.log(response.data)
+                                    
                     this.users = response.data
+             
+                    var start = (this.pagination.currentPage -1) * 2 
+                    this.users =  this.users.slice(start, start + 2)
+
+                })
+                .catch(e => {
+                    console.log('error -> ' + e)
+                    this.errors.push(e)
+                })
+               
+            
+        },
+        totalItems: 100
+        
+
+    },    
+    computed: {               
+        noDeleted() {
+            return this.users.filter(usr => usr.is_deleted == '0')
+
+        }
+    },
+    methods: {
+        /*getList() {
+
+            axios.get(`http://localhost:8080/data`)
+                .then(response => {
+                    //console.log(response.data)
+                                    
+                    this.users = response.data
+                    this.users = this.users.slice(0, 3) 
+
                 })
                 .catch(e => {
                     console.log('error -> ' + e)
                     this.errors.push(e)
                 })
 
-        },
+        },*/
         editUser(user_in) {
 
             user_in.is_editing = '1'
@@ -82,7 +117,7 @@ new Vue({
         },
         updateUser(user_in) {
             //console.log('data ' + user_in.id, user_in.firstname, user_in.lastname)
-            // Performing a POST request
+            // Performing a PUT request
             axios.put('http://localhost:8080/data/' + user_in.id, {                    
                     firstname: this.d_fname,
                     lastname: this.d_lname,
@@ -109,15 +144,17 @@ new Vue({
         },
         deleteUser(user_in) {
 
-            var mensaje = confirm("EStas seguro de eliminar el registro?");
+            var mensaje = confirm("Estas seguro de eliminar el registro?");
 
             if (mensaje) {
 
                 axios.delete('http://localhost:8080/data/' + user_in.id, )
                 .then(function(response) {
-                        console.log('delete successfully!!')
+                    console.log('delete successfully!!')
 
                 })
+
+                user_in.is_editing = '2'
 
             }else {
                 console.log('Accion cancelada')
@@ -125,6 +162,7 @@ new Vue({
         },
         searchUser(){            
             console.log(this.searchId)
+            
 
             axios.get(`http://localhost:8080/data/` + this.searchId)
                 .then(response => {
@@ -134,22 +172,20 @@ new Vue({
 
                 })
                 .catch(e => {
-                    resultElement.innerHTML = '<h3 style="color: red">Sin resultados</h3>';
+                    this.searchResult = []
 
                 }) 
-        }
-
-
-    },
-    computed: {
-        noDeleted() {
-            return this.users.filter(usr => usr.is_deleted == '0')
-
+        },
+        loadData () {
+            this.pageChanged()
 
         }
-    },
+
+
+    },    
     mounted() {
-        this.getList()
+        //this.getList()
+        this.loadData()
     }
 })
     

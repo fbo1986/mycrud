@@ -17,32 +17,26 @@
             <div class="col-lg-12 mtop-20">
                 <h1>MY | CRUD </h1>
             </div>
-
             <!-- ADD SECTION -->
             <div class="col-lg-7 mtop-20">
                 <h3>Agregar nuevo usuario</h3>
                 <form class="" @submit.prevent="insertUsert">
-                    <div class="form-group">                        
-                    <label class="" for="fname">Nombre</label>
-                    <input type="text" v-model="fname" class="form-control w-100" id="fname" placeholder="Jane" required/>
-                    </div>
-
-                    <div class="form-group">       
-                    <label class="" for="lname">Apellido</label>
-                    <input type="text" v-model="lname" class="form-control w-100" id="lname" placeholder="Doe" required/>
-                    </div>
-
-                    <div class="form-group">                        
-                    <label class="" for="email">Em@il</label>
-                    <input type="email" v-model="email" class="form-control w-100" id="email" placeholder="yo@mailito.com" required/>
-                    </div>
-
                     <div class="form-group">
-                        
-                    <label class="" for="phone">Telefono</label>
-                    <input type="number" v-model="phone" class="form-control w-100" id="phone" placeholder="55 345 56 781" required/>
+                        <label class="" for="fname">Nombre</label>
+                        <input type="text" v-model="fname" class="form-control w-100" id="fname" placeholder="Jane" required/>
                     </div>
-                    
+                    <div class="form-group">
+                        <label class="" for="lname">Apellido</label>
+                        <input type="text" v-model="lname" class="form-control w-100" id="lname" placeholder="Doe" required/>
+                    </div>
+                    <div class="form-group">
+                        <label class="" for="email">Em@il</label>
+                        <input type="email" v-model="email" class="form-control w-100" id="email" placeholder="yo@mailito.com" required/>
+                    </div>
+                    <div class="form-group">
+                        <label class="" for="phone">Telefono</label>
+                        <input type="number" v-model="phone" class="form-control w-100" id="phone" placeholder="55 345 56 781" required/>
+                    </div>
                     <button type="submit" class="btn btn-primary">Agregar</button>
                 </form>
             </div>
@@ -51,20 +45,16 @@
                 <h3>Buscar</h3>
                 <form class="" @submit.prevent="searchUser">
                     <div class="form-group">
-                    <label class="" for="inlineFormInput">Id</label>
-                    <input type="text" v-model="searchId" class="form-control mb-2 mr-sm-2 mb-sm-0" id="search_id"  required/>
+                        <label class="" for="inlineFormInput">Id</label>
+                        <input type="text" v-model="searchId" class="form-control mb-2 mr-sm-2 mb-sm-0" id="search_id" required/>
                     </div>
-                    
                     <button type="" class="btn btn-primary">Buscar</button>
                 </form>
-
-                
-                <div class="w-100"  >                        
-                    <ul class="list-group"  v-for="(result, key) of searchResult">
+                <div class="w-100">
+                    <ul class="list-group" v-for="(result, key) of searchResult">
                         <li class="list-group-item">
                             <div class="w-20"><strong>{{key}}:</strong>{{result}}</div>
-                                                     
-                        </li>                    
+                        </li>
                     </ul>
                 </div>
             </div>
@@ -76,8 +66,7 @@
                 <h3>All Users</h3>
                 <br>
                 <ul class="list-group" v-for="user of users">
-
-                     <template v-if="user.is_editing == '0' "> 
+                    <template v-if="user.is_editing == '0' ">
                         <li class="list-group-item">
                             <div class="w-20">{{user.firstname}}</div>
                             <div class="w-20">{{user.lastname}}</div>
@@ -93,8 +82,7 @@
                                 </span>
                             </div>
                         </li>
-                     </template>
-
+                    </template>
                     <template v-if="user.is_editing == '1'">
                         <li class="list-group-item editing">
                             <div class="w-20">
@@ -120,17 +108,22 @@
                             </div>
                         </li>
                     </template>
-
                 </ul>
+                <br>
+                <hr>
+                <div is="uib-pagination" :total-items="totalItems" v-model="pagination" @change="pageChanged()"></div>
+                
+                <hr>
             </div>
             </ul>
         </div>
     </div>
     <!-- SCRIPTS FROM VUE  -->
     <script data-require="vue.js@2.1.10" data-semver="2.1.10" src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.1.10/vue.js"></script>
+    <script src="vuejs-uib-pagination.js"></script>
     <script src="https://code.jquery.com/jquery-3.2.1.min.js" crossorigin="anonymous"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-    <script src="main.js" ></script>
+    <script src="main.js"></script>
 </body>
 
 </html>

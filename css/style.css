@@ -47,3 +47,15 @@
 .w-100 {
     width: 100%;
 }
+/* ------------------------------------- */
+.pagination {
+    display: flex;
+    padding-left: 0;
+    margin: 20px 0;
+
+    border-radius: 4px;
+}
+.pagination > li {
+    display: inline;
+    padding: .7em;
+}
