@@ -17,17 +17,17 @@
             <div class="col-lg-12 mtop-20">
                 <h1>MY | CRUD </h1>
             </div>
-            <!-- ADD SECTION -->
+            <!-- CREATE SECTION -->
             <div class="col-lg-7 mtop-20">
                 <h3>Agregar nuevo usuario</h3>
                 <form class="" @submit.prevent="insertUsert">
                     <div class="form-group">
-                        <label class="" for="fname">Nombre</label>
-                        <input type="text" v-model="fname" class="form-control w-100" id="fname" placeholder="Jane" required/>
+                        <label class="" for="firstName">Nombre</label>
+                        <input type="text" v-model="firstName" class="form-control w-100" id="fname" placeholder="Jane" required/>
                     </div>
                     <div class="form-group">
-                        <label class="" for="lname">Apellido</label>
-                        <input type="text" v-model="lname" class="form-control w-100" id="lname" placeholder="Doe" required/>
+                        <label class="" for="lastName">Apellido</label>
+                        <input type="text" v-model="lastName" class="form-control w-100" id="lname" placeholder="Doe" required/>
                     </div>
                     <div class="form-group">
                         <label class="" for="email">Em@il</label>
@@ -37,18 +37,24 @@
                         <label class="" for="phone">Telefono</label>
                         <input type="number" v-model="phone" class="form-control w-100" id="phone" placeholder="55 345 56 781" required/>
                     </div>
-                    <button type="submit" class="btn btn-primary">Agregar</button>
+                    <button type="submit" class="btn btn-outline-success">Agregar</button>
+                    
+
                 </form>
             </div>
+
             <!-- SEARCH SECTION -->
             <div class="col-lg-5 mtop-20">
                 <h3>Buscar</h3>
                 <form class="" @submit.prevent="searchUser">
                     <div class="form-group">
-                        <label class="" for="inlineFormInput">Id</label>
-                        <input type="text" v-model="searchId" class="form-control mb-2 mr-sm-2 mb-sm-0" id="search_id" required/>
+                        <label class="" for="inlineFormInput">Nombre</label>
+                        <input type="text" v-model="searchByName" class="form-control mb-2 mr-sm-2 mb-sm-0" id="search_id" required/>
                     </div>
-                    <button type="" class="btn btn-primary">Buscar</button>
+                    <button type="" class="btn btn-outline-primary">Buscar</button>
+                    <!-- <button type="submit" class="btn btn-outline-warning">LImpiar</button> -->
+                    <button type="button" class="btn btn-outline-warning" @click="setPage(1)">Limpiar</button>
+
                 </form>
                 <div class="w-100">
                     <ul class="list-group" v-for="(result, key) of searchResult">
@@ -58,15 +64,19 @@
                     </ul>
                 </div>
             </div>
+
         </div>
+
         <br>
         <hr>
+
         <div class="row">
             <div class="col-lg-12  mtop-20">
                 <h3>All Users</h3>
                 <br>
                 <ul class="list-group" v-for="user of users">
-                    <template v-if="user.is_editing == '0' ">
+
+                    <template v-if="!user.is_editing">
                         <li class="list-group-item">
                             <div class="w-20">{{user.firstname}}</div>
                             <div class="w-20">{{user.lastname}}</div>
@@ -83,19 +93,21 @@
                             </div>
                         </li>
                     </template>
-                    <template v-if="user.is_editing == '1'">
+
+                    <template v-if="user.is_editing == true">
+
                         <li class="list-group-item editing">
                             <div class="w-20">
-                                <input class="form-control bord-none" type="text" name="" v-model="d_fname">
+                                <input class="form-control bord-none" type="text" name="" v-model="editInputFirstName">
                             </div>
                             <div class="w-20">
-                                <input class="form-control bord-none" type="text" name="" v-model="d_lname">
+                                <input class="form-control bord-none" type="text" name="" v-model="editInputLastName">
                             </div>
                             <div class="w-20">
-                                <input type="text" name="" v-model="d_email" class="form-control bord-none">
+                                <input type="text" name="" v-model="editInputEmail" class="form-control bord-none">
                             </div>
                             <div class="w-20 text-right">
-                                <input type="text" name="" v-model="d_phone" class="form-control bord-none">
+                                <input type="text" name="" v-model="editInputPhone" class="form-control bord-none">
                             </div>
                             <!-- ACTIONS -->
                             <div class="w-20 text-right">
@@ -108,10 +120,13 @@
                             </div>
                         </li>
                     </template>
+
                 </ul>
+
                 <br>
                 <hr>
-                <div is="uib-pagination" :total-items="totalItems" v-model="pagination" @change="pageChanged()"></div>
+
+                <div is="uib-pagination" :total-items="totalItems" v-model="pagination" @change="pageChanged()" :items-per-page="10"></div>
                 
                 <hr>
             </div>
