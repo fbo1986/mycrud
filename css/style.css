@@ -1,0 +1,49 @@
+/* Custom page CSS
+-------------------------------------------------- */
+.bord-none {
+    border: none;
+}
+.completed > * {
+    text-decoration: line-through;
+
+    color: #c6c6c6;
+}
+.colr-gray > * {
+    color: #c6c6c6;
+}
+.editing {
+    zoom: 1.1;
+
+    border: solid 2px #eeef50;
+}
+.editing input[type=text] {
+    color: #e2d63f;
+}
+.f-size-2em {
+    font-size: 2em;
+}
+.mtop-20 {
+    margin-top: 20px;
+}
+.my-span {
+    display: block;
+    padding: 0 10px 0 10px;
+}
+.pad-r-10 {
+    padding-right: 10px;
+}
+.pointer {
+    cursor: pointer;
+
+    color: #1f0da1;
+}
+
+.w-20 {
+    width: 20%;
+}
+.w-90 {
+    width: 88%;
+}
+.w-100 {
+    width: 100%;
+}
