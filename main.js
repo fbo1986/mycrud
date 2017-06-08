@@ -60,7 +60,7 @@ new Vue({
     },    
     computed: {               
         noDeleted() {
-            return this.users.filter(usr => usr.is_deleted == '0')
+            return this.users.filter(usr => usr.is_deleted == false)
 
         }
     },
@@ -172,12 +172,23 @@ new Vue({
             axios.get(`data?firstname=` + this.searchByName)
                 .then(response => {
 
-                    console.log('response.data>>>' + response.data )
-                    this.users = response.data
+                    if( response.data == '' ){
+
+                        alert('Sin resultados (-_-) ')
+                        this.searchByName = ''
+                        
+                    }
+                    if(response.data != ''){
+
+                        this.users = response.data
+                        
+                    } 
+
 
                 })
                 .catch(e => {
                     console.log('err->' + e)
+                    
 
                 })
                             
